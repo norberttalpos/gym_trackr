@@ -9,15 +9,15 @@ class BodyWeightExercise extends Exercise {
 
   BodyWeightExercise({
     required name,
-    required img,
+    required imgPath,
     required tracked,
     required this.records,
-  }) : super(name: name, img: img, tracked: tracked);
+  }) : super(name: name, imgPath: imgPath, tracked: tracked);
 
   @override
   List<Record> getRecords() => records;
 
   @override
   String getDisplayedScore() =>
-      '${records.first.reps.toString()} reps';
+      records.isNotEmpty ? '${records.first.reps.toString()} reps' : "-";
 }

@@ -2,12 +2,12 @@ import '../record/record.dart';
 
 abstract class Exercise {
   String name;
-  String img;
+  String imgPath;
   bool tracked;
 
   Exercise({
     required this.name,
-    required this.img,
+    required this.imgPath,
     required this.tracked
   });
 

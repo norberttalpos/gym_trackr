@@ -9,15 +9,15 @@ class WeightedExercise extends Exercise {
 
   WeightedExercise({
     required name,
-    required img,
+    required imgPath,
     required tracked,
     required this.records,
-  }) : super(name: name, img: img, tracked: tracked);
+  }) : super(name: name, imgPath: imgPath, tracked: tracked);
 
   @override
   List<Record> getRecords() => records;
 
   @override
   String getDisplayedScore() =>
-      '${records.first.calculateOneRepMax().toString()} kg';
+      records.isNotEmpty ? '${records.first.calculateOneRepMax().toString()} kg' : "-";
 }
