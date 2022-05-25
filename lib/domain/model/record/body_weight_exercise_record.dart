@@ -1,13 +1,10 @@
 import 'package:gym_trackr/domain/model/record/record.dart';
 
-class BodyWeightExerciseRecord implements Record {
-
-  int reps;
+class BodyWeightExerciseRecord extends Record {
 
   BodyWeightExerciseRecord({
-    required this.reps,
-  });
+    required reps,
+    DateTime? date,
+  }) : super(reps: reps, date: date);
 
-  @override
-  int getReps() => reps;
 }

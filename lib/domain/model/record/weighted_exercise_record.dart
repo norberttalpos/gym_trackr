@@ -1,21 +1,17 @@
 import 'package:gym_trackr/domain/model/record/record.dart';
 
-class WeightedExerciseRecord implements Record {
+class WeightedExerciseRecord extends Record {
 
-  int reps;
   double weight;
 
   WeightedExerciseRecord({
-    required this.reps,
-    required this.weight
-  });
-
-  @override
-  int getReps() => reps;
-
-  double getWeight() => weight;
+    required reps,
+    required this.weight,
+    DateTime? date
+  }) : super(reps: reps, date: date);
 
   double calculateOneRepMax() {
     return weight * (36 / (37 - reps));
   }
+
 }

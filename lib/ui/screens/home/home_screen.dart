@@ -11,7 +11,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   ExerciseDataSource dataSource = MockExerciseDataSource();
 
   Widget _buildExerciseScore(Exercise exercise) {
@@ -25,10 +24,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildExerciseTile(Exercise exercise) {
-
     return GestureDetector(
       onTap: () {
-
+        print(exercise.getRecords().first.formattedDate());
       },
       child: Container(
         margin: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
@@ -37,13 +35,12 @@ class _HomeScreenState extends State<HomeScreen> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20.0),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
-                color: Colors.grey.shade300,
-                spreadRadius: 1.0,
-                blurRadius: 10.0,
-                offset: const Offset(3.0, 3.0)
-            )
+                color: Color.fromRGBO(246, 202, 189, 0.4),
+                spreadRadius: 3.0,
+                blurRadius: 8.0,
+                offset: Offset(5.0, 5.0))
           ],
         ),
         child: Padding(
@@ -57,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: const Image(
                   height: 80.0,
                   width: 80.0,
-                  image: NetworkImage('http://i.imgur.com/zL4Krbz.jpg'),
+                  image: NetworkImage("https://cdn-icons-png.flaticon.com/512/3412/3412862.png"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -70,14 +67,30 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       SizedBox(
                         width: 130,
-                        child: Text(
-                          exercise.name,
-                          style: const TextStyle(
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              exercise.name,
+                              style: const TextStyle(
+                                fontSize: 22.0,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
+                            const SizedBox(
+                                height: 6,
+                            ),
+                            Text(
+                              exercise.getDisplayDate(),
+                              style: const TextStyle(
+                                fontSize: 15.0,
+                                color: Colors.deepOrange,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       _buildExerciseScore(exercise),
@@ -92,33 +105,56 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  int _currentTab = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-                child: FutureBuilder<List<Exercise>>(
-                    future: dataSource.getExercises(),
-                    builder: (context, exerciserListSnap) {
+          child: Column(
+              children: [
+                Expanded(
+            child: FutureBuilder<List<Exercise>>(
+                future: dataSource.getExercises(),
+                builder: (context, exerciserListSnap) {
+                  if (exerciserListSnap.hasData) {
+                    List<Exercise> trackedExercises = exerciserListSnap.data!
+                        .where((el) => el.tracked)
+                        .toList();
 
-                    if(exerciserListSnap.hasData) {
-                      List<Exercise> trackedExercises = exerciserListSnap.data!.where((el) => el.tracked).toList();
-
-                      return ListView.builder(
-                          itemCount: trackedExercises.length,
-                          itemBuilder: (BuildContext context, int idx) {
-                              return _buildExerciseTile(trackedExercises[idx]);
-                          });
-                    } else {
-                        return ListView();
-                    }
+                    return ListView.builder(
+                        itemCount: trackedExercises.length,
+                        itemBuilder: (BuildContext context, int idx) {
+                          return _buildExerciseTile(trackedExercises[idx]);
+                        });
+                  } else {
+                    return ListView();
                   }
-                )
-            )
-          ]
-        )
+                }))
+      ])),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentTab,
+        onTap: (int value) {
+          setState(() {
+            _currentTab = value;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home_outlined,
+              size: 30.0,
+            ),
+            title: SizedBox.shrink(),
+          ),
+          BottomNavigationBarItem(
+            icon: CircleAvatar(
+              radius: 15.0,
+              backgroundImage: NetworkImage('http://i.imgur.com/zL4Krbz.jpg'),
+            ),
+            title: SizedBox.shrink(),
+          )
+        ],
       ),
     );
   }

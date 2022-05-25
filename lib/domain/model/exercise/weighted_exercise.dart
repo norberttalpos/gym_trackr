@@ -19,5 +19,14 @@ class WeightedExercise extends Exercise {
 
   @override
   String getDisplayedScore() =>
-      records.isNotEmpty ? '${records.first.calculateOneRepMax().toString()} kg' : "-";
+      records.isNotEmpty ? '${_roundDouble(records.first.calculateOneRepMax())} kg' : "-";
+
+  double _roundDouble(double num) {
+    double fraction = num - num.truncate();
+    if(fraction < 0.5) {
+      return num.truncateToDouble();
+    } else {
+      return num.truncateToDouble() + 0.5;
+    }
+  }
 }

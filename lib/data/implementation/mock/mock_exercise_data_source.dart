@@ -21,6 +21,18 @@ class MockExerciseDataSource implements ExerciseDataSource {
       WeightedExerciseRecord(reps: 10, weight: 90.0),
       WeightedExerciseRecord(reps: 5, weight: 105.0),
     ]),
+    WeightedExercise(name: "Back squat", imgPath: "bench_press.png", tracked: true, records: [
+      WeightedExerciseRecord(reps: 10, weight: 110.0),
+      WeightedExerciseRecord(reps: 5, weight: 130.0),
+    ]),
+    WeightedExercise(name: "Deadlift", imgPath: "bench_press.png", tracked: true, records: [
+      WeightedExerciseRecord(reps: 10, weight: 120.0),
+      WeightedExerciseRecord(reps: 5, weight: 150.0),
+    ]),
+    WeightedExercise(name: "Bicep curl", imgPath: "bench_press.png", tracked: true, records: [
+      WeightedExerciseRecord(reps: 10, weight: 18.0),
+      WeightedExerciseRecord(reps: 12, weight: 16.0),
+    ]),
   ];
 
   @override

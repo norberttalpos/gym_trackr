@@ -14,4 +14,8 @@ abstract class Exercise {
   List<Record> getRecords();
 
   String getDisplayedScore();
+
+  String getDisplayDate() {
+    return getRecords().first.formattedDate();
+  }
 }
