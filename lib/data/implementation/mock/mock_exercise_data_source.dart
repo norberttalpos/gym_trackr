@@ -18,6 +18,7 @@ class MockExerciseDataSource implements ExerciseDataSource {
     ]),
     BodyWeightExercise(name: "Pistol squat", imgPath: "pistol_squat.png", tracked: false, records: []),
     WeightedExercise(name: "Bench press", imgPath: "bench_press.png", tracked: true, records: [
+      WeightedExerciseRecord(reps: 10, weight: 95.0),
       WeightedExerciseRecord(reps: 10, weight: 90.0),
       WeightedExerciseRecord(reps: 5, weight: 105.0),
     ]),
@@ -26,6 +27,12 @@ class MockExerciseDataSource implements ExerciseDataSource {
       WeightedExerciseRecord(reps: 5, weight: 130.0),
     ]),
     WeightedExercise(name: "Deadlift", imgPath: "bench_press.png", tracked: true, records: [
+      WeightedExerciseRecord(reps: 10, weight: 120.0),
+      WeightedExerciseRecord(reps: 5, weight: 150.0),
+      WeightedExerciseRecord(reps: 10, weight: 120.0),
+      WeightedExerciseRecord(reps: 5, weight: 150.0),
+      WeightedExerciseRecord(reps: 10, weight: 120.0),
+      WeightedExerciseRecord(reps: 5, weight: 150.0),
       WeightedExerciseRecord(reps: 10, weight: 120.0),
       WeightedExerciseRecord(reps: 5, weight: 150.0),
     ]),

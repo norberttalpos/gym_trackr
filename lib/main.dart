@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gym_trackr/ui/common/theme_data_provider.dart';
-import 'package:gym_trackr/ui/screens/home/home_screen.dart';
+import 'package:gym_trackr/ui/screens/details/details_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(
@@ -35,8 +35,8 @@ class _GymTrackrState extends State<GymTrackr> {
           body: const SafeArea(
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 15.0),
-                child: HomeScreen(),
-              )
+                child: DetailsScreen(exerciseName: "Deadlift"),
+              ),
           ),
           bottomNavigationBar: BottomNavigationBar(
             selectedItemColor: themeDataProvider.themeData.themeData.primaryColor,

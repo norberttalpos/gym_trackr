@@ -15,8 +15,12 @@ class HomeExerciseTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeDataProvider = context.watch<ThemeDataProvider>();
+
     return ExerciseTileBase(
-      onTap: () {},
+      onTap: () {
+
+      },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -49,7 +53,7 @@ class HomeExerciseTile extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 23.0,
                               fontWeight: FontWeight.w600,
-                              color: context.watch<ThemeDataProvider>().themeData.mainTextColor,
+                              color: themeDataProvider.themeData.mainTextColor,
                             ),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
@@ -61,7 +65,7 @@ class HomeExerciseTile extends StatelessWidget {
                             exercise.getDisplayDate(),
                             style: TextStyle(
                               fontSize: 15.5,
-                              color: context.watch<ThemeDataProvider>().themeData.mainTextColor,
+                              color: themeDataProvider.themeData.themeData.primaryColor,
                             ),
                           ),
                         ],
@@ -72,7 +76,7 @@ class HomeExerciseTile extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.w600,
-                        color: context.watch<ThemeDataProvider>().themeData.mainTextColor,
+                        color: themeDataProvider.themeData.mainTextColor,
                       ),
                     )
                   ],

@@ -15,15 +15,15 @@ class ThemeDataProvider with ChangeNotifier {
       themeData: ThemeData(
         primaryColor: Colors.deepOrange,
         accentColor: const Color(0xFFD8ECF1),
-        scaffoldBackgroundColor: const Color(0xFF2A2B2E),
+        scaffoldBackgroundColor: const Color(0xFF00766B),
       ),
       tileColor: const Color(0xff3e4145),
       mainTextColor: const Color(0xF5D9D9E5),
       tileShadow: const BoxShadow(
-        color: Color.fromRGBO(65, 40, 0, 0.65),
-        spreadRadius: 3.0,
-        blurRadius: 8.0,
-        offset: Offset(5.0, 5.0),
+          color: Color.fromRGBO(255, 77, 0, 0.5764705882352941),
+          spreadRadius: 2.0,
+          blurRadius: 3.0,
+          offset: Offset(3.0, 3.0)
       )
   );
 
@@ -31,15 +31,15 @@ class ThemeDataProvider with ChangeNotifier {
       themeData: ThemeData(
         primaryColor: Colors.deepOrange,
         accentColor: const Color(0xFFD8ECF1),
-        scaffoldBackgroundColor: const Color(0xFFF3F5F7),
+        scaffoldBackgroundColor: const Color(0xFF00B4A5),
       ),
-      tileColor: Colors.white,
+      tileColor: const Color(0xffe3eaea),
       mainTextColor: Colors.black,
       tileShadow: const BoxShadow(
-          color: Color.fromRGBO(246, 202, 189, 0.55),
-          spreadRadius: 3.0,
-          blurRadius: 8.0,
-          offset: Offset(5.0, 5.0)
+          color: Color.fromRGBO(255, 77, 0, 0.792156862745098),
+          spreadRadius: 2.0,
+          blurRadius: 3.0,
+          offset: Offset(3.0, 3.0)
       )
   );
 

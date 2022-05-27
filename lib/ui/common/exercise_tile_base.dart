@@ -15,19 +15,20 @@ class ExerciseTileBase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeDataProvider = context.watch<ThemeDataProvider>();
     return GestureDetector(
         onTap: () {
           onTap();
         },
         child: Container(
           margin: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-          height: 110.0,
+          height: 100.0,
           width: double.infinity,
           decoration: BoxDecoration(
-            color: context.watch<ThemeDataProvider>().themeData.tileColor,
+            color: themeDataProvider.themeData.tileColor,
             borderRadius: BorderRadius.circular(20.0),
             boxShadow: [
-              context.watch<ThemeDataProvider>().themeData.tileShadow,
+              themeDataProvider.themeData.tileShadow,
             ],
           ),
           child: Padding(
