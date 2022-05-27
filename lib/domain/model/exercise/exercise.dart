@@ -18,4 +18,6 @@ abstract class Exercise {
   String getDisplayDate() {
     return getRecords().first.formattedDate();
   }
+
+  void orderRecords();
 }

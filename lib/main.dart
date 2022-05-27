@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gym_trackr/ui/common/providers/current_tab_provider.dart';
 import 'package:gym_trackr/ui/common/providers/details_page_shown_provider.dart';
+import 'package:gym_trackr/ui/common/providers/exercise_data_source_provider.dart';
 import 'package:gym_trackr/ui/common/providers/theme_data_provider.dart';
 import 'package:gym_trackr/ui/screens/home/home_screen.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +11,8 @@ void main() => runApp(
       providers: [
         ChangeNotifierProvider(create: (context) => ThemeDataProvider()),
         ChangeNotifierProvider(create: (context) => CurrentTabProvider()),
-        ChangeNotifierProvider(create: (context) => DetailsPageShownProvider())
+        ChangeNotifierProvider(create: (context) => DetailsPageShownProvider()),
+        ChangeNotifierProvider(create: (context) => ExerciseDataSourceProvider()),
       ],
       child: const GymTrackr()
   )

@@ -1,9 +1,10 @@
 import 'package:gym_trackr/domain/model/exercise/exercise.dart';
 import 'package:gym_trackr/domain/model/record/body_weight_exercise_record.dart';
+import 'package:gym_trackr/domain/model/exercise/record_orderable_mixin.dart';
 
 import '../record/record.dart';
 
-class BodyWeightExercise extends Exercise {
+class BodyWeightExercise extends Exercise with RecordOrderableMixin {
 
   List<BodyWeightExerciseRecord> records;
 
@@ -20,4 +21,9 @@ class BodyWeightExercise extends Exercise {
   @override
   String getDisplayedScore() =>
       records.isNotEmpty ? '${records.first.reps.toString()} reps' : "-";
+
+  @override
+  void orderRecords() {
+    orderRecordList(records);
+  }
 }

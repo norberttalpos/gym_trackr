@@ -57,11 +57,13 @@ class MockExerciseDataSource implements ExerciseDataSource {
   @override
   Future<void> updateExercise(Exercise exercise) async {
     int idx = _exerciseList.indexWhere((el) => el.name == exercise.name);
+    exercise.orderRecords();
     _exerciseList[idx] = exercise;
   }
 
   @override
   Future<void> insertExercise(Exercise exercise) async {
+    exercise.orderRecords();
     _exerciseList.add(exercise);
   }
 }

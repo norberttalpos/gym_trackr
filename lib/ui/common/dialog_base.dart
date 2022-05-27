@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gym_trackr/ui/common/providers/exercise_data_source_provider.dart';
 import 'package:gym_trackr/ui/common/providers/theme_data_provider.dart';
 import 'package:provider/src/provider.dart';
 
@@ -21,7 +22,10 @@ abstract class DialogBase extends StatefulWidget {
   @override
   State<DialogBase> createState() => _DialogBaseState();
 
-  void addRecordButtonClickHandler(List<String> values);
+  void addRecordButtonClickHandler(
+      List<String> values,
+      ExerciseDataSourceProvider exerciseDataSourceProvider
+  );
 }
 
 class _DialogBaseState extends State<DialogBase> {
@@ -38,6 +42,7 @@ class _DialogBaseState extends State<DialogBase> {
   @override
   Widget build(BuildContext context) {
     final themeDataProvider = context.watch<ThemeDataProvider>();
+    final dataSourceProvider = context.watch<ExerciseDataSourceProvider>();
 
     return AlertDialog(
       backgroundColor: themeDataProvider.themeData.tileColor,
@@ -83,7 +88,8 @@ class _DialogBaseState extends State<DialogBase> {
 
                       if(allFilled) {
                         widget.addRecordButtonClickHandler(
-                            widget.textFormFields.map((e) => e.controller!.text).toList()
+                            widget.textFormFields.map((e) => e.controller!.text).toList(),
+                            dataSourceProvider
                         );
 
                         Navigator.of(context).pop();

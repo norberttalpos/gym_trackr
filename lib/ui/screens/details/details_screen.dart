@@ -6,6 +6,7 @@ import 'package:gym_trackr/domain/model/record/body_weight_exercise_record.dart'
 import 'package:gym_trackr/domain/model/record/record.dart';
 import 'package:gym_trackr/domain/model/record/weighted_exercise_record.dart';
 import 'package:gym_trackr/ui/common/providers/details_page_shown_provider.dart';
+import 'package:gym_trackr/ui/common/providers/exercise_data_source_provider.dart';
 import 'package:gym_trackr/ui/common/providers/theme_data_provider.dart';
 import 'package:gym_trackr/ui/screens/details/components/exercise_profile.dart';
 import 'package:provider/src/provider.dart';
@@ -24,9 +25,9 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
-  ExerciseDataSource dataSource = MockExerciseDataSource();
 
   Widget _buildList(AsyncSnapshot<Exercise?> exerciseSnap) {
+
     if (exerciseSnap.hasData) {
       List<Record> exerciseRecords = exerciseSnap.data!.getRecords().toList();
 
@@ -88,9 +89,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final themeDataProvider = context.watch<ThemeDataProvider>();
+    final dataSourceProvider = context.watch<ExerciseDataSourceProvider>();
 
     return FutureBuilder<Exercise?>(
-        future: dataSource.getExerciseByName(widget.exerciseName),
+        future: dataSourceProvider.getExerciseByName(widget.exerciseName),
         builder: (context, exerciseSnap) {
           return Column(children: [
             Padding(
