@@ -43,7 +43,7 @@ class HomeExerciseTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: 130,
+                      width: 125,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,7 +51,7 @@ class HomeExerciseTile extends StatelessWidget {
                           Text(
                             exercise.name,
                             style: TextStyle(
-                              fontSize: 23.0,
+                              fontSize: 21.0,
                               fontWeight: FontWeight.w600,
                               color: themeDataProvider.themeData.mainTextColor,
                             ),
@@ -74,9 +74,9 @@ class HomeExerciseTile extends StatelessWidget {
                     Text(
                       exercise.getDisplayedScore().toString(),
                       style: TextStyle(
-                        fontSize: 20.0,
+                        fontSize: 21,
                         fontWeight: FontWeight.w600,
-                        color: themeDataProvider.themeData.mainTextColor,
+                        color: themeDataProvider.themeData.themeData.primaryColor,
                       ),
                     )
                   ],

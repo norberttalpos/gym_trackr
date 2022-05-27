@@ -25,7 +25,7 @@ class DetailsScreen extends StatefulWidget {
 class _DetailsScreenState extends State<DetailsScreen> {
   ExerciseDataSource dataSource = MockExerciseDataSource();
 
-  Widget _buildList(AsyncSnapshot exerciseSnap) {
+  Widget _buildList(AsyncSnapshot<Exercise?> exerciseSnap) {
     if (exerciseSnap.hasData) {
       List<Record> exerciseRecords = exerciseSnap.data!.getRecords().toList();
 
@@ -76,6 +76,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
     }
   }
 
+  Widget _buildAddRecordButton(AsyncSnapshot<Exercise?> exerciseSnap) {
+    if(exerciseSnap.hasData) {
+      return AddRecordButton(exercise: exerciseSnap.data!,);
+    } else {
+      return Container();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Exercise?>(
@@ -97,10 +105,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.end,
-                        children: const [
+                        children: [
                           Padding(
-                            padding: EdgeInsets.only(right: 12, bottom: 3),
-                            child: AddRecordButton(),
+                            padding: const EdgeInsets.only(right: 12, bottom: 3),
+                            child: _buildAddRecordButton(exerciseSnap),
                           ),
                         ],
                       )
