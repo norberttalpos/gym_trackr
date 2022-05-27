@@ -9,7 +9,7 @@ class ThemeDataProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  bool _isLightTheme = true;
+  bool _isLightTheme = false;
 
   final _darkTheme = CustomThemeData(
       themeData: ThemeData(

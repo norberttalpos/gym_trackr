@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gym_trackr/domain/model/exercise/weighted_exercise.dart';
 import 'package:gym_trackr/domain/model/record/weighted_exercise_record.dart';
-import 'package:gym_trackr/ui/common/theme_data_provider.dart';
+import 'package:gym_trackr/ui/common/providers/theme_data_provider.dart';
 import 'package:provider/src/provider.dart';
 
 import 'details_exercise_tile_base.dart';

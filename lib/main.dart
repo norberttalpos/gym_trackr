@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:gym_trackr/ui/common/theme_data_provider.dart';
-import 'package:gym_trackr/ui/screens/details/details_screen.dart';
+import 'package:gym_trackr/ui/common/providers/current_tab_provider.dart';
+import 'package:gym_trackr/ui/common/providers/details_page_shown_provider.dart';
+import 'package:gym_trackr/ui/common/providers/theme_data_provider.dart';
+import 'package:gym_trackr/ui/screens/home/home_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(
   MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => ThemeDataProvider())
+        ChangeNotifierProvider(create: (context) => ThemeDataProvider()),
+        ChangeNotifierProvider(create: (context) => CurrentTabProvider()),
+        ChangeNotifierProvider(create: (context) => DetailsPageShownProvider())
       ],
       child: const GymTrackr()
   )
@@ -21,49 +25,55 @@ class GymTrackr extends StatefulWidget {
 
 class _GymTrackrState extends State<GymTrackr> {
 
-  int _currentTab = 0;
+  Widget _buildPage(int currentTab) {
+
+    switch(currentTab) {
+      case 0: return const HomeScreen();
+      default: return Scaffold();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final themeDataProvider = context.watch<ThemeDataProvider>();
+    final currentTabProvider = context.watch<CurrentTabProvider>();
 
     return MaterialApp(
         title: 'gym trackr',
         debugShowCheckedModeBanner: false,
         theme: themeDataProvider.themeData.themeData,
         home: Scaffold(
-          body: const SafeArea(
+          body: SafeArea(
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 15.0),
-                child: DetailsScreen(exerciseName: "Deadlift"),
+                padding: const EdgeInsets.symmetric(vertical: 15.0),
+                child: _buildPage(currentTabProvider.currentTab),
               ),
           ),
           bottomNavigationBar: BottomNavigationBar(
             selectedItemColor: themeDataProvider.themeData.themeData.primaryColor,
             backgroundColor: themeDataProvider.themeData.themeData.scaffoldBackgroundColor,
-            currentIndex: _currentTab,
+            currentIndex: currentTabProvider.currentTab,
             onTap: (int value) {
-              setState(() {
-                _currentTab = value;
-              });
-              Provider.of<ThemeDataProvider>(context, listen: false).toggleDarkMode();
+              Provider.of<CurrentTabProvider>(context, listen: false).setCurrentTab(value);
+
+              // Provider.of<ThemeDataProvider>(context, listen: false).toggleDarkMode();
             },
             items: [
               BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.home_outlined,
+                icon: const Icon(
+                  Icons.home,
                   size: 30.0,
-                  color: themeDataProvider.themeData.mainTextColor,
                 ),
                 label: "Home",
+                backgroundColor: themeDataProvider.themeData.themeData.primaryColor,
               ),
               BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.settings_outlined,
+                icon: const Icon(
+                  Icons.settings,
                   size: 30.0,
-                  color: themeDataProvider.themeData.mainTextColor,
                 ),
                 label: "Settings",
+                backgroundColor: themeDataProvider.themeData.themeData.primaryColor,
               )
             ],
           ),

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gym_trackr/ui/common/theme_data_provider.dart';
+import 'package:gym_trackr/ui/common/providers/theme_data_provider.dart';
 import 'package:provider/provider.dart';
 
 class ExerciseTileBase extends StatelessWidget {

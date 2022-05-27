@@ -5,7 +5,8 @@ import 'package:gym_trackr/domain/model/exercise/exercise.dart';
 import 'package:gym_trackr/domain/model/record/body_weight_exercise_record.dart';
 import 'package:gym_trackr/domain/model/record/record.dart';
 import 'package:gym_trackr/domain/model/record/weighted_exercise_record.dart';
-import 'package:gym_trackr/ui/common/theme_data_provider.dart';
+import 'package:gym_trackr/ui/common/providers/details_page_shown_provider.dart';
+import 'package:gym_trackr/ui/common/providers/theme_data_provider.dart';
 import 'package:gym_trackr/ui/screens/details/components/exercise_profile.dart';
 import 'package:provider/src/provider.dart';
 
@@ -86,12 +87,36 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeDataProvider = context.watch<ThemeDataProvider>();
+
     return FutureBuilder<Exercise?>(
         future: dataSource.getExerciseByName(widget.exerciseName),
         builder: (context, exerciseSnap) {
           return Column(children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 15, left: 10),
+              child: Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Provider.of<DetailsPageShownProvider>(context, listen: false).setDetailsPageShown(false, "");
+                    },
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: themeDataProvider.themeData.mainTextColor,
+                      size: 28,
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      shape: const CircleBorder(),
+                      padding: const EdgeInsets.all(13),
+                      primary: themeDataProvider.themeData.tileColor,
+                    ),
+                  )
+                ],
+              ),
+            ),
             SizedBox(
-              height: 180,
+              height: 150,
               child: _buildExerciseProfile(exerciseSnap),
             ),
             Expanded(

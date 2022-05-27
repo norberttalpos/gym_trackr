@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gym_trackr/domain/model/exercise/exercise.dart';
 import 'package:gym_trackr/ui/common/exercise_tile_base.dart';
-import 'package:gym_trackr/ui/common/theme_data_provider.dart';
+import 'package:gym_trackr/ui/common/providers/current_tab_provider.dart';
+import 'package:gym_trackr/ui/common/providers/details_page_shown_provider.dart';
+import 'package:gym_trackr/ui/common/providers/theme_data_provider.dart';
 import 'package:provider/src/provider.dart';
 
 class HomeExerciseTile extends StatelessWidget {
@@ -19,7 +21,7 @@ class HomeExerciseTile extends StatelessWidget {
 
     return ExerciseTileBase(
       onTap: () {
-
+        Provider.of<DetailsPageShownProvider>(context, listen: false).setDetailsPageShown(true, exercise.name);
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -76,7 +78,7 @@ class HomeExerciseTile extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 21,
                         fontWeight: FontWeight.w600,
-                        color: themeDataProvider.themeData.themeData.primaryColor,
+                        color: themeDataProvider.themeData.mainTextColor,
                       ),
                     )
                   ],

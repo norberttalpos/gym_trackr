@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gym_trackr/domain/model/exercise/exercise.dart';
 import 'package:gym_trackr/domain/model/exercise/weighted_exercise.dart';
 import 'package:gym_trackr/ui/common/theme_data.dart';
-import 'package:gym_trackr/ui/common/theme_data_provider.dart';
+import 'package:gym_trackr/ui/common/providers/theme_data_provider.dart';
 import 'package:gym_trackr/ui/screens/details/dialog/add_record_dialog.dart';
 import 'package:provider/src/provider.dart';
 

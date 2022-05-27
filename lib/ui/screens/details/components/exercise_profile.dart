@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gym_trackr/domain/model/exercise/body_weight_exercise.dart';
 import 'package:gym_trackr/domain/model/exercise/exercise.dart';
-import 'package:gym_trackr/ui/common/theme_data_provider.dart';
+import 'package:gym_trackr/ui/common/providers/theme_data_provider.dart';
 import 'package:provider/src/provider.dart';
 
 class ExerciseProfile extends StatelessWidget {
@@ -28,7 +28,7 @@ class ExerciseProfile extends StatelessWidget {
     const imageSize = 130.0;
 
     return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(
               height: 140,
