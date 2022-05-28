@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gym_trackr/data/exercise_data_source.dart';
-import 'package:gym_trackr/data/implementation/mock/mock_exercise_data_source.dart';
-import 'package:gym_trackr/domain/model/exercise/exercise.dart';
-import 'package:gym_trackr/domain/model/record/body_weight_exercise_record.dart';
-import 'package:gym_trackr/domain/model/record/record.dart';
-import 'package:gym_trackr/domain/model/record/weighted_exercise_record.dart';
+import 'package:gym_trackr/domain/model/exercise.dart';
+import 'package:gym_trackr/domain/model/record.dart';
 import 'package:gym_trackr/ui/common/providers/details_page_shown_provider.dart';
 import 'package:gym_trackr/ui/common/providers/exercise_data_source_provider.dart';
 import 'package:gym_trackr/ui/common/providers/theme_data_provider.dart';
@@ -29,7 +25,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   Widget _buildList(AsyncSnapshot<Exercise?> exerciseSnap) {
 
     if (exerciseSnap.hasData) {
-      List<Record> exerciseRecords = exerciseSnap.data!.getRecords().toList();
+      List<Record> exerciseRecords = exerciseSnap.data!.records.toList();
 
       if (exerciseRecords.isNotEmpty) {
         return ListView.builder(
@@ -37,9 +33,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
             itemBuilder: (BuildContext context, int idx) {
               Record record = exerciseRecords[idx];
 
-              if (record is BodyWeightExerciseRecord) {
+              if (exerciseSnap.data!.isBodyWeightExercise()) {
                 return DetailsBodyWeightExerciseTile(exerciseRecord: record);
-              } else if (record is WeightedExerciseRecord) {
+              } else if (exerciseSnap.data!.isWeightedExercise()) {
                 return DetailsWeightedExerciseTile(exerciseRecord: record);
               } else {
                 throw Exception(
@@ -47,20 +43,23 @@ class _DetailsScreenState extends State<DetailsScreen> {
               }
             });
       } else {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "No records yet",
-              style: TextStyle(
-                fontSize: 23.0,
-                fontWeight: FontWeight.w600,
-                color:
-                    context.watch<ThemeDataProvider>().themeData.mainTextColor,
+        return Padding(
+          padding: const EdgeInsets.only(top: 50),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "No records yet",
+                style: TextStyle(
+                  fontSize: 23.0,
+                  fontWeight: FontWeight.w600,
+                  color:
+                      context.watch<ThemeDataProvider>().themeData.mainTextColor,
+                ),
+                maxLines: 1,
               ),
-              maxLines: 1,
-            ),
-          ],
+            ],
+          ),
         );
       }
     } else {

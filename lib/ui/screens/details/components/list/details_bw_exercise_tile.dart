@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gym_trackr/domain/model/record/body_weight_exercise_record.dart';
+import 'package:gym_trackr/domain/model/record.dart';
 import 'package:gym_trackr/ui/common/providers/theme_data_provider.dart';
 import 'package:provider/src/provider.dart';
 
 import 'details_exercise_tile_base.dart';
 
 class DetailsBodyWeightExerciseTile extends DetailsExerciseTileBase {
-  final BodyWeightExerciseRecord exerciseRecord;
+  final Record exerciseRecord;
 
   const DetailsBodyWeightExerciseTile({
     Key? key,

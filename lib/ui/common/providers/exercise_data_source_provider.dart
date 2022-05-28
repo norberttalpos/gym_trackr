@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gym_trackr/data/exercise_data_source.dart';
-import 'package:gym_trackr/data/implementation/mock/mock_exercise_data_source.dart';
-import 'package:gym_trackr/data/implementation/persistent/floor_exercise_data_source.dart';
-import 'package:gym_trackr/domain/model/exercise/exercise.dart';
+import 'package:gym_trackr/data/implementation/firestore/firestore_exercise_data_source.dart';
+import 'package:gym_trackr/domain/model/exercise.dart';
+import 'package:gym_trackr/domain/model/record.dart';
 
 class ExerciseDataSourceProvider with ChangeNotifier {
 
-  final ExerciseDataSource _exerciseDataSource = MockExerciseDataSource();
+  final ExerciseDataSource _exerciseDataSource = FireStoreExerciseDataSource();
 
   Future<List<Exercise>> getExercises() {
     return _exerciseDataSource.getExercises();
@@ -17,13 +17,13 @@ class ExerciseDataSourceProvider with ChangeNotifier {
     return _exerciseDataSource.getExerciseByName(name);
   }
 
-  Future<void> updateExercise(Exercise exercise) async {
-    _exerciseDataSource.updateExercise(exercise);
+  Future<void> addRecordToExercise(String exerciseName, Record record) async {
+    await _exerciseDataSource.addRecordToExercise(exerciseName, record);
     notifyListeners();
   }
 
-  Future<void> insertExercise(Exercise exercise) async {
-    _exerciseDataSource.insertExercise(exercise);
+  Future<void> createExercise(String exerciseName, String type) async {
+    await _exerciseDataSource.createExercise(exerciseName, type);
     notifyListeners();
   }
 }

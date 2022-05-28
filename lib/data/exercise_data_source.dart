@@ -1,4 +1,5 @@
-import 'package:gym_trackr/domain/model/exercise/exercise.dart';
+import 'package:gym_trackr/domain/model/exercise.dart';
+import 'package:gym_trackr/domain/model/record.dart';
 
 abstract class ExerciseDataSource {
 
@@ -8,7 +9,7 @@ abstract class ExerciseDataSource {
 
   Future<Exercise?> getExerciseByName(String name);
 
-  Future<void> updateExercise(Exercise exercise);
+  Future<void> addRecordToExercise(String exerciseName, Record record);
 
-  Future<void> insertExercise(Exercise exercise);
+  Future<void> createExercise(String exerciseName, String type);
 }

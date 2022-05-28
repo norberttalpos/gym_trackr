@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gym_trackr/domain/model/exercise/body_weight_exercise.dart';
-import 'package:gym_trackr/domain/model/exercise/exercise.dart';
+import 'package:gym_trackr/domain/model/exercise.dart';
 import 'package:gym_trackr/ui/common/providers/theme_data_provider.dart';
 import 'package:provider/src/provider.dart';
 
@@ -14,10 +13,45 @@ class ExerciseProfile extends StatelessWidget {
   }) : super(key: key);
 
   String _scoreLabel() {
-    if(exercise is BodyWeightExercise) {
-      return "Max";
+    return exercise.isBodyWeightExercise() ? "Max" : "One-rep max";
+  }
+
+  _buildScoreCard(BuildContext context) {
+    final themeDataProvider = context.watch<ThemeDataProvider>();
+
+    if(exercise.records.isNotEmpty) {
+      return Card(
+          elevation: 4.0,
+          color: themeDataProvider.themeData.tileColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              children: [
+                Text(
+                  _scoreLabel(),
+                  style: TextStyle(
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.w400,
+                    color: themeDataProvider.themeData.mainTextColor,
+                  ),
+                ),
+                Text(
+                  exercise.getDisplayedScore(),
+                  style: TextStyle(
+                    fontSize: 22.0,
+                    fontWeight: FontWeight.w600,
+                    color: themeDataProvider.themeData.themeData.primaryColor,
+                  ),
+                ),
+              ],
+            ),
+          )
+      );
     } else {
-      return "One-rep max";
+      return Container();
     }
   }
 
@@ -92,42 +126,7 @@ class ExerciseProfile extends StatelessWidget {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(right: 15),
-                                    child: Card(
-                                        elevation: 4.0,
-                                        color: themeDataProvider.themeData.tileColor,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(20.0),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(12.0),
-                                          child: Column(
-                                            children: [
-                                              Text(
-                                                _scoreLabel(),
-                                                style: TextStyle(
-                                                  fontSize: 15.0,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: context
-                                                      .watch<ThemeDataProvider>()
-                                                      .themeData
-                                                      .mainTextColor,
-                                                ),
-                                              ),
-                                              Text(
-                                                exercise.getDisplayedScore(),
-                                                style: TextStyle(
-                                                  fontSize: 22.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: context
-                                                      .watch<ThemeDataProvider>()
-                                                      .themeData
-                                                      .themeData.primaryColor,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                    ),
+                                    child: _buildScoreCard(context),
                                   ),
                                 ],
                               ),

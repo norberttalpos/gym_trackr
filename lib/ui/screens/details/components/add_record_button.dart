@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gym_trackr/domain/model/exercise/exercise.dart';
-import 'package:gym_trackr/domain/model/exercise/weighted_exercise.dart';
+import 'package:gym_trackr/domain/model/exercise.dart';
+import 'package:gym_trackr/ui/common/providers/exercise_data_source_provider.dart';
 import 'package:gym_trackr/ui/common/theme_data.dart';
 import 'package:gym_trackr/ui/common/providers/theme_data_provider.dart';
 import 'package:gym_trackr/ui/screens/details/dialog/add_record_dialog.dart';
@@ -52,7 +52,7 @@ class AddRecordButton extends StatelessWidget {
       _createTextFormField("Reps", themeData)
     ];
 
-    if(exercise is WeightedExercise) {
+    if(exercise.isWeightedExercise()) {
       textFormFields.add(_createTextFormField("Weight", themeData));
     }
 
