@@ -2,6 +2,8 @@ import 'package:gym_trackr/domain/model/exercise/exercise.dart';
 
 abstract class ExerciseDataSource {
 
+  Future<void> init();
+
   Future<List<Exercise>> getExercises();
 
   Future<Exercise?> getExerciseByName(String name);
