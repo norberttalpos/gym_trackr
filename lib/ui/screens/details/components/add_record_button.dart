@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gym_trackr/domain/model/exercise.dart';
-import 'package:gym_trackr/ui/common/providers/exercise_data_source_provider.dart';
 import 'package:gym_trackr/ui/common/theme_data.dart';
 import 'package:gym_trackr/ui/common/providers/theme_data_provider.dart';
 import 'package:gym_trackr/ui/screens/details/dialog/add_record_dialog.dart';
+import 'package:gym_trackr/ui/screens/details/dialog/dialog_base.dart';
 import 'package:provider/src/provider.dart';
 
 class AddRecordButton extends StatelessWidget {
@@ -16,44 +16,14 @@ class AddRecordButton extends StatelessWidget {
     required this.exercise,
   }) : super(key: key);
 
-  TextFormField _createTextFormField(String labelText, CustomThemeData themeData) {
-
-    final labelStyle = TextStyle(
-      fontSize: 18.0,
-      color: themeData.mainTextColor,
-    );
-
-    return TextFormField(
-      decoration: InputDecoration(
-        labelText: labelText,
-        labelStyle: labelStyle,
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-              color: themeData.themeData.primaryColor,
-              width: 1.0
-          ),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-              color: themeData.themeData.scaffoldBackgroundColor,
-              width: 1.0
-          ),
-        ),
-      ),
-      style: labelStyle,
-      keyboardType: TextInputType.number,
-      controller: TextEditingController(),
-    );
-  }
-
   List<TextFormField> _buildTextFormFields(CustomThemeData themeData) {
 
     final textFormFields = [
-      _createTextFormField("Reps", themeData)
+      DialogBase.createTextFormField("Reps", themeData)
     ];
 
     if(exercise.isWeightedExercise()) {
-      textFormFields.add(_createTextFormField("Weight", themeData));
+      textFormFields.add(DialogBase.createTextFormField("Weight", themeData));
     }
 
     return textFormFields;

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gym_trackr/ui/common/providers/exercise_data_source_provider.dart';
 import 'package:gym_trackr/ui/common/providers/theme_data_provider.dart';
+import 'package:gym_trackr/ui/common/theme_data.dart';
 import 'package:provider/src/provider.dart';
 
 abstract class DialogBase extends StatefulWidget {
@@ -26,6 +27,44 @@ abstract class DialogBase extends StatefulWidget {
       List<String> values,
       ExerciseDataSourceProvider exerciseDataSourceProvider
   );
+
+  static TextFormField createTextFormFieldOwnController(
+      String labelText,
+      CustomThemeData themeData,
+      TextEditingController controller
+      ) {
+
+    final labelStyle = TextStyle(
+      fontSize: 18.0,
+      color: themeData.mainTextColor,
+    );
+
+    return TextFormField(
+      decoration: InputDecoration(
+        labelText: labelText,
+        labelStyle: labelStyle,
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+              color: themeData.themeData.primaryColor,
+              width: 1.0
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+              color: themeData.themeData.scaffoldBackgroundColor,
+              width: 1.0
+          ),
+        ),
+      ),
+      style: labelStyle,
+      keyboardType: TextInputType.number,
+      controller: controller,
+    );
+  }
+
+  static TextFormField createTextFormField(String labelText, CustomThemeData themeData) {
+    return createTextFormFieldOwnController(labelText, themeData, TextEditingController());
+  }
 }
 
 class _DialogBaseState extends State<DialogBase> {

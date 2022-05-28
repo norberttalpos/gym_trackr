@@ -5,11 +5,13 @@ import 'package:gym_trackr/ui/common/theme_data.dart';
 class ThemeDataProvider with ChangeNotifier {
 
   void toggleDarkMode() {
-    switchMode();
+    _switchMode();
     notifyListeners();
   }
 
   bool _isLightTheme = false;
+
+  bool get isLightTheme => _isLightTheme;
 
   final _darkTheme = CustomThemeData(
       themeData: ThemeData(
@@ -43,7 +45,9 @@ class ThemeDataProvider with ChangeNotifier {
       )
   );
 
-  void switchMode() => _isLightTheme = !_isLightTheme;
+  void _switchMode() => _isLightTheme = !_isLightTheme;
 
   CustomThemeData get themeData => _isLightTheme ? _lightTheme : _darkTheme;
+
+  CustomThemeData get oppositeThemeData => _isLightTheme ? _darkTheme : _lightTheme;
 }

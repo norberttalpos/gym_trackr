@@ -20,17 +20,37 @@ class FireStoreExerciseDataSource implements ExerciseDataSource {
   }
 
   @override
+  Future<void> toggleTracked(String exerciseName, bool isTracked) async {
+    QuerySnapshot querySnapshot = await _exerciseCollection.where("name", isEqualTo: exerciseName).get();
+
+    final doc = querySnapshot.docs.first;
+
+    final data = doc.data() as Map<String, dynamic>;
+    final exercise = Exercise.fromJson(data)..tracked = isTracked;
+
+    _exerciseCollection.doc(doc.id).update(exercise.toJson());
+  }
+
+  @override
   Future<void> createExercise(String exerciseName, String type) async {
-    _exerciseCollection.add(Exercise(name: exerciseName, tracked: true, type: type).toJson());
+    final exerciseByName = await getExerciseByName(exerciseName);
+
+    if(exerciseByName == null) {
+      _exerciseCollection.add(Exercise(name: exerciseName, tracked: true, type: type).toJson());
+    }
   }
 
   @override
   Future<Exercise?> getExerciseByName(String name) async {
     QuerySnapshot querySnapshot = await _exerciseCollection.where("name", isEqualTo: name).get();
 
-    return querySnapshot.docs.map((doc) {
-      return Exercise.fromJson(doc.data() as Map<String, Object?>);
-    }).first;
+    if(querySnapshot.docs.isEmpty) {
+      return null;
+    } else {
+      return querySnapshot.docs.map((doc) {
+        return Exercise.fromJson(doc.data() as Map<String, Object?>);
+      }).first;
+    }
   }
 
   @override
@@ -44,4 +64,5 @@ class FireStoreExerciseDataSource implements ExerciseDataSource {
 
   @override
   Future<void> init() async {}
+
 }

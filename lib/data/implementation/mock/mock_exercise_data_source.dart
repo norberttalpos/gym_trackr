@@ -51,14 +51,11 @@ class MockExerciseDataSource implements ExerciseDataSource {
 
   @override
   Future<List<Exercise>> getExercises() async {
-    await Future.delayed(const Duration(milliseconds: 200));
-    var asd = _exerciseList;
     return _exerciseList;
   }
 
   @override
   Future<Exercise?> getExerciseByName(String name) async {
-    await Future.delayed(const Duration(milliseconds: 200));
     return _exerciseList.firstWhere((el) => el.name == name);
   }
 
@@ -71,5 +68,11 @@ class MockExerciseDataSource implements ExerciseDataSource {
   @override
   Future<void> createExercise(String exerciseName, String type) async {
     _exerciseList.add(Exercise(name: exerciseName, tracked: true, type: type));
+  }
+
+  @override
+  Future<void> toggleTracked(String exerciseName, bool isTracked) async {
+    int idx = _exerciseList.indexWhere((el) => el.name == exerciseName);
+    _exerciseList[idx].tracked = isTracked;
   }
 }

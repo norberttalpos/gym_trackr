@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gym_trackr/domain/model/exercise.dart';
 import 'package:gym_trackr/domain/model/record.dart';
-import 'package:gym_trackr/ui/common/dialog_base.dart';
+import 'package:gym_trackr/ui/screens/details/dialog/dialog_base.dart';
 import 'package:gym_trackr/ui/common/providers/exercise_data_source_provider.dart';
 
 class AddRecordDialog extends DialogBase {
@@ -15,7 +15,7 @@ class AddRecordDialog extends DialogBase {
     key: key,
     exerciseName: exercise.name,
     textFormFields: textFormFields,
-    title: "Add ${exercise.name} result",
+    title: exercise.name,
     buttonText: "Add result",
   );
 

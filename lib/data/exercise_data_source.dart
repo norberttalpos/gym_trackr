@@ -12,4 +12,6 @@ abstract class ExerciseDataSource {
   Future<void> addRecordToExercise(String exerciseName, Record record);
 
   Future<void> createExercise(String exerciseName, String type);
+
+  Future<void> toggleTracked(String exerciseName, bool isTracked);
 }

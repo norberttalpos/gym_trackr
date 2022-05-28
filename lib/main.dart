@@ -6,6 +6,7 @@ import 'package:gym_trackr/ui/common/providers/details_page_shown_provider.dart'
 import 'package:gym_trackr/ui/common/providers/exercise_data_source_provider.dart';
 import 'package:gym_trackr/ui/common/providers/theme_data_provider.dart';
 import 'package:gym_trackr/ui/screens/home/home_screen.dart';
+import 'package:gym_trackr/ui/screens/settings/settings_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(
@@ -33,7 +34,7 @@ class _GymTrackrState extends State<GymTrackr> {
 
     switch(currentTab) {
       case 0: return const HomeScreen();
-      default: return Scaffold();
+      default: return const SettingsScreen();
     }
   }
 

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gym_trackr/data/exercise_data_source.dart';
-import 'package:gym_trackr/data/implementation/mock/mock_exercise_data_source.dart';
 import 'package:gym_trackr/domain/model/exercise.dart';
 import 'package:gym_trackr/ui/common/providers/details_page_shown_provider.dart';
 import 'package:gym_trackr/ui/common/providers/exercise_data_source_provider.dart';
+import 'package:gym_trackr/ui/common/providers/theme_data_provider.dart';
 import 'package:gym_trackr/ui/screens/details/details_screen.dart';
 import 'package:gym_trackr/ui/screens/home/components/home_exercise_tile.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildScreen() {
     final detailsPageShownProvider = context.watch<DetailsPageShownProvider>();
     final dataSourceProvider = context.watch<ExerciseDataSourceProvider>();
+    final themeDataProvider = context.watch<ThemeDataProvider>();
 
     if(!detailsPageShownProvider.detailsPageShown) {
       return Column(children: [
@@ -35,13 +35,26 @@ class _HomeScreenState extends State<HomeScreen> {
                     .where((el) => el.tracked)
                     .toList();
 
-                return ListView.builder(
-                    itemCount: trackedExercises.length,
-                    itemBuilder: (BuildContext context, int idx) {
-                      return HomeExerciseTile(
-                        exercise: trackedExercises[idx],
-                      );
-                    });
+                if(trackedExercises.isEmpty) {
+                  return Center(
+                    child: Text(
+                      "No tracked exercises",
+                      style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.w800,
+                        color: themeDataProvider.themeData.tileColor,
+                      ),
+                    ),
+                  );
+                } else {
+                  return ListView.builder(
+                      itemCount: trackedExercises.length,
+                      itemBuilder: (BuildContext context, int idx) {
+                        return HomeExerciseTile(
+                          exercise: trackedExercises[idx],
+                        );
+                      });
+                }
               } else {
                 return ListView();
               }

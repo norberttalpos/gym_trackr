@@ -22,6 +22,11 @@ class ExerciseDataSourceProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> toggleTracked(String exerciseName, bool isTracked) async {
+    await _exerciseDataSource.toggleTracked(exerciseName, isTracked);
+    notifyListeners();
+  }
+
   Future<void> createExercise(String exerciseName, String type) async {
     await _exerciseDataSource.createExercise(exerciseName, type);
     notifyListeners();
