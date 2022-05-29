@@ -1,16 +1,17 @@
 # gym_trackr
 
-A new Flutter project.
+Aiming to help with tracking the progress made in the gym
 
-## Getting Started
+## Screenshots
 
-This project is a starting point for a Flutter application.
+#### Home 
+![](screenshots/home.png)
 
-A few resources to get you started if this is your first Flutter project:
+#### Exercise details
+![](screenshots/details.png)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+#### Settings
+![](screenshots/settings.png)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+#### Add exercise dialog
+![](screenshots/dialog.png)

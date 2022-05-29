@@ -7,7 +7,7 @@ class ThemeDataProvider with ChangeNotifier {
 
   late bool _isLightTheme;
 
-  static String _isLightThemeKey = "isLightTheme";
+  static const String _isLightThemeKey = "isLightTheme";
 
   ThemeDataProvider() {
     init();
