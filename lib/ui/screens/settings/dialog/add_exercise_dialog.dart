@@ -34,10 +34,11 @@ class _AddExerciseDialogState extends State<AddExerciseDialog> {
     List<Widget> _buildForm() {
 
       return [
-        DialogBase.createTextFormFieldOwnController(
-            "Name",
-            themeDataProvider.themeData,
-            _exerciseNameInputController
+        DialogBase.createTextFormField(
+          labelText: "Name",
+          themeData: themeDataProvider.themeData,
+          controller: _exerciseNameInputController,
+          textInputType: TextInputType.text,
         ),
         const SizedBox(height: 20,),
         Theme(
@@ -45,7 +46,10 @@ class _AddExerciseDialogState extends State<AddExerciseDialog> {
             canvasColor: themeDataProvider.themeData.tileColor
           ),
           child: DropdownButtonFormField(
-            value: _exerciseType,
+            icon: const Icon(
+              Icons.arrow_drop_down,
+              size: 30,
+            ),
             items: exerciseTypes.map((e) => DropdownMenuItem(
               value: e,
               child: Container(
@@ -68,6 +72,11 @@ class _AddExerciseDialogState extends State<AddExerciseDialog> {
                 color: themeDataProvider.themeData.mainTextColor,
             ),
             decoration: InputDecoration(
+              hintText: "Exercise type",
+              hintStyle: TextStyle(
+                fontSize: 18,
+                color: themeDataProvider.themeData.mainTextColor,
+              ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                     color: themeDataProvider.themeData.themeData.primaryColor,

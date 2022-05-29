@@ -23,11 +23,11 @@ class AddRecordButton extends StatelessWidget {
     List<TextFormField> _buildTextFormFields(CustomThemeData themeData) {
 
       final textFormFields = [
-        DialogBase.createTextFormField("Reps", themeData)
-      ];
+          DialogBase.createTextFormField(labelText: "Reps", themeData: themeData),
+        ];
 
-      if(exercise.isWeightedExercise()) {
-        textFormFields.add(DialogBase.createTextFormField("Weight", themeData));
+        if(exercise.isWeightedExercise()) {
+        textFormFields.add(DialogBase.createTextFormField(labelText: "Weight", themeData: themeData));
       }
 
       return textFormFields;

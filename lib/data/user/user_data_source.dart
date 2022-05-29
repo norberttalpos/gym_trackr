@@ -20,8 +20,8 @@ class UserDataSource {
   static Future<String> setUserId() async {
     final prefs = await SharedPreferences.getInstance();
 
-    final generatedUserId = const Uuid().v5(Uuid.NAMESPACE_URL, "gym_trackr").toString();
-    prefs.setString(userIdKey, generatedUserId);
+    final generatedUserId = const Uuid().v4().toString();
+    await prefs.setString(userIdKey, generatedUserId);
 
     return generatedUserId;
   }

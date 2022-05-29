@@ -46,7 +46,6 @@ class _GymTrackrState extends State<GymTrackr> {
   }
 
   Future<void> _checkUserId() async {
-
     if(!await UserDataSource.isUserIdSet()) {
       String generatedUserId = await UserDataSource.setUserId();
       final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
@@ -70,51 +69,55 @@ class _GymTrackrState extends State<GymTrackr> {
               return FutureBuilder(
                   future: _checkUserId(),
                   builder: (context, val) {
-                    return MaterialApp(
-                        title: 'gym trackr',
-                        debugShowCheckedModeBanner: false,
-                        theme: themeDataProvider.themeData.themeData,
-                        home: Scaffold(
-                          body: SafeArea(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 15.0),
-                              child: _buildPage(currentTabProvider.currentTab),
-                            ),
-                          ),
-                          bottomNavigationBar: BottomNavigationBar(
-                            selectedItemColor: themeDataProvider.themeData.themeData
-                                .primaryColor,
-                            backgroundColor: themeDataProvider.themeData.themeData
-                                .scaffoldBackgroundColor,
-                            currentIndex: currentTabProvider.currentTab,
-                            onTap: (int value) {
-                              Provider.of<CurrentTabProvider>(context, listen: false)
-                                  .setCurrentTab(value);
-
-                              // Provider.of<ThemeDataProvider>(context, listen: false).toggleDarkMode();
-                            },
-                            items: [
-                              BottomNavigationBarItem(
-                                icon: const Icon(
-                                  Icons.home,
-                                  size: 30.0,
-                                ),
-                                label: "Home",
-                                backgroundColor: themeDataProvider.themeData.themeData
-                                    .primaryColor,
+                    if(val.connectionState == ConnectionState.done) {
+                      return MaterialApp(
+                          title: 'gym trackr',
+                          debugShowCheckedModeBanner: false,
+                          theme: themeDataProvider.themeData.themeData,
+                          home: Scaffold(
+                            body: SafeArea(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 15.0),
+                                child: _buildPage(currentTabProvider.currentTab),
                               ),
-                              BottomNavigationBarItem(
-                                icon: const Icon(
-                                  Icons.settings,
-                                  size: 30.0,
+                            ),
+                            bottomNavigationBar: BottomNavigationBar(
+                              selectedItemColor: themeDataProvider.themeData.themeData
+                                  .primaryColor,
+                              backgroundColor: themeDataProvider.themeData.themeData
+                                  .scaffoldBackgroundColor,
+                              currentIndex: currentTabProvider.currentTab,
+                              onTap: (int value) {
+                                Provider.of<CurrentTabProvider>(context, listen: false)
+                                    .setCurrentTab(value);
+
+                                // Provider.of<ThemeDataProvider>(context, listen: false).toggleDarkMode();
+                              },
+                              items: [
+                                BottomNavigationBarItem(
+                                  icon: const Icon(
+                                    Icons.home,
+                                    size: 30.0,
+                                  ),
+                                  label: "Home",
+                                  backgroundColor: themeDataProvider.themeData.themeData
+                                      .primaryColor,
                                 ),
-                                label: "Settings",
-                                backgroundColor: themeDataProvider.themeData.themeData
-                                    .primaryColor,
-                              )
-                            ],
-                          ),
-                        ));
+                                BottomNavigationBarItem(
+                                  icon: const Icon(
+                                    Icons.settings,
+                                    size: 30.0,
+                                  ),
+                                  label: "Settings",
+                                  backgroundColor: themeDataProvider.themeData.themeData
+                                      .primaryColor,
+                                )
+                              ],
+                            ),
+                          ));
+                    } else {
+                      return Container();
+                    }
                   }
               );
             } else {

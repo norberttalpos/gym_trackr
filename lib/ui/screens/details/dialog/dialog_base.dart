@@ -28,11 +28,15 @@ abstract class DialogBase extends StatefulWidget {
       ExerciseDataSourceProvider exerciseDataSourceProvider
   );
 
-  static TextFormField createTextFormFieldOwnController(
-      String labelText,
-      CustomThemeData themeData,
-      TextEditingController controller
-      ) {
+  static TextFormField createTextFormField({
+    required String labelText,
+    required CustomThemeData themeData,
+    TextEditingController? controller,
+    TextInputType? textInputType,
+  }) {
+
+    controller ??= TextEditingController();
+    textInputType ??= TextInputType.number;
 
     final labelStyle = TextStyle(
       fontSize: 18.0,
@@ -57,13 +61,9 @@ abstract class DialogBase extends StatefulWidget {
         ),
       ),
       style: labelStyle,
-      keyboardType: TextInputType.number,
+      keyboardType: textInputType,
       controller: controller,
     );
-  }
-
-  static TextFormField createTextFormField(String labelText, CustomThemeData themeData) {
-    return createTextFormFieldOwnController(labelText, themeData, TextEditingController());
   }
 }
 
