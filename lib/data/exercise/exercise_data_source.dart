@@ -3,6 +3,10 @@ import 'package:gym_trackr/domain/model/record.dart';
 
 abstract class ExerciseDataSource {
 
+  ExerciseDataSource() {
+    init();
+  }
+
   Future<void> init();
 
   Future<List<Exercise>> getExercises();

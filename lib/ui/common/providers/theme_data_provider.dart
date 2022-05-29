@@ -36,7 +36,7 @@ class ThemeDataProvider with ChangeNotifier {
         scaffoldBackgroundColor: const Color(0xFF00B4A5),
       ),
       tileColor: const Color(0xffe3eaea),
-      mainTextColor: Colors.black,
+      mainTextColor: const Color(0xff222222),
       tileShadow: const BoxShadow(
           color: Color.fromRGBO(255, 77, 0, 0.792156862745098),
           spreadRadius: 2.0,

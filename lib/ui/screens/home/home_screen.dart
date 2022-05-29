@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if(!detailsPageShownProvider.detailsPageShown || context.read<ExerciseDeletedProvider>().exerciseDeleted) {
       if(context.read<ExerciseDeletedProvider>().exerciseDeleted) {
         context.read<ExerciseDeletedProvider>().setIsExerciseDeleted(false);
-        context.read<DetailsPageShownProvider>().setDetailsPageShown(false, "");
+        context.read<DetailsPageShownProvider>().setDetailsPageShown(val: false);
       }
 
       return Column(children: [

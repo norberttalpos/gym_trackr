@@ -5,13 +5,13 @@ part 'user.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class User {
-  String userName;
+  String userId;
   List<Exercise> exercises;
 
   User({
-    required this.userName,
-    required this.exercises,
-  });
+    required this.userId,
+    List<Exercise>? exercises,
+  }) : exercises = exercises ?? [];
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 

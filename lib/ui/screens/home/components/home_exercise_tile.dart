@@ -20,7 +20,7 @@ class HomeExerciseTile extends StatelessWidget {
 
     return ExerciseTileBase(
       onTap: () {
-        Provider.of<DetailsPageShownProvider>(context, listen: false).setDetailsPageShown(true, exercise.name);
+        context.read<DetailsPageShownProvider>().setDetailsPageShown(val: true, exercise: exercise.name);
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

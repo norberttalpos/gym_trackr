@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:gym_trackr/data/exercise_data_source.dart';
-import 'package:gym_trackr/data/implementation/firestore/firestore_exercise_data_source.dart';
+import 'package:gym_trackr/data/exercise/exercise_data_source.dart';
+import 'package:gym_trackr/data/exercise/implementation/firestore/firestore_exercise_data_source.dart';
 import 'package:gym_trackr/domain/model/exercise.dart';
 import 'package:gym_trackr/domain/model/record.dart';
 

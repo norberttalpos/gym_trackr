@@ -42,6 +42,8 @@ dependencies:
   json_serializable: ^6.2.0
   json_annotation: ^4.5.0
   cloud_firestore: ^3.1.17
+  shared_preferences: ^2.0.15
+  uuid: ^3.0.6
 
 dev_dependencies:
   flutter_test:

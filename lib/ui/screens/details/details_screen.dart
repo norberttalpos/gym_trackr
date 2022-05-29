@@ -70,7 +70,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
   _navigateBackToHomeScreen() {
     context.read<ExerciseDeletedProvider>().setIsExerciseDeleted(false);
-    Provider.of<DetailsPageShownProvider>(context, listen: false).setDetailsPageShown(false, "");
+    context.read<DetailsPageShownProvider>().setDetailsPageShown(val: false);
   }
 
   Widget _buildExerciseProfile(AsyncSnapshot exerciseSnap) {

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class DetailsPageShownProvider with ChangeNotifier {
 
-  void setDetailsPageShown(bool val, String exercise) {
+  void setDetailsPageShown({required bool val, String exercise = ""}) {
     _detailsPageShown = val;
     _selectedExercise = exercise;
     notifyListeners();

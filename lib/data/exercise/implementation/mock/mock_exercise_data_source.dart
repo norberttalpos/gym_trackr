@@ -1,14 +1,10 @@
-import 'package:gym_trackr/data/exercise_data_source.dart';
+import 'package:gym_trackr/data/exercise/exercise_data_source.dart';
 import 'package:gym_trackr/domain/model/exercise.dart';
 import 'package:gym_trackr/domain/model/record.dart';
 
 class MockExerciseDataSource implements ExerciseDataSource {
 
   late List<Exercise> _exerciseList;
-
-  MockExerciseDataSource() {
-    init();
-  }
 
   @override
   Future<void> init() async {

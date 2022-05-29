@@ -93,7 +93,9 @@ class _SettingsExerciseTileState extends State<SettingsExerciseTile> {
 
     return ExerciseTileBase(
       onTap: () {
-        _setIsTracked(!_isTracked);
+        if(!widget.deleteMode) {
+          _setIsTracked(!_isTracked);
+        }
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

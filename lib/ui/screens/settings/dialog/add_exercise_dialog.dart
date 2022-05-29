@@ -40,40 +40,45 @@ class _AddExerciseDialogState extends State<AddExerciseDialog> {
             _exerciseNameInputController
         ),
         const SizedBox(height: 20,),
-        DropdownButtonFormField(
-          value: _exerciseType,
-          items: exerciseTypes.map((e) => DropdownMenuItem(
-            value: e,
-            child: Container(
-              child: Text(
-                e,
-              ),
-              alignment: Alignment.centerLeft,
-              width: 200,
-              height: 70,
-            ),
-
-          )).toList(),
-          onChanged: (String? newValue) {
-            setState(() {
-              _exerciseType = newValue!;
-            });
-          },
-          style: const TextStyle(
-              fontSize: 18,
-              color: Colors.black,
+        Theme(
+          data: Theme.of(context).copyWith(
+            canvasColor: themeDataProvider.themeData.tileColor
           ),
-          decoration: InputDecoration(
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: themeDataProvider.themeData.themeData.primaryColor,
-                  width: 1.0
+          child: DropdownButtonFormField(
+            value: _exerciseType,
+            items: exerciseTypes.map((e) => DropdownMenuItem(
+              value: e,
+              child: Container(
+                child: Text(
+                  e,
+                ),
+                alignment: Alignment.centerLeft,
+                width: 200,
+                height: 70,
               ),
+
+            )).toList(),
+            onChanged: (String? newValue) {
+              setState(() {
+                _exerciseType = newValue!;
+              });
+            },
+            style: TextStyle(
+                fontSize: 18,
+                color: themeDataProvider.themeData.mainTextColor,
             ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: themeDataProvider.themeData.themeData.scaffoldBackgroundColor,
-                  width: 1.0
+            decoration: InputDecoration(
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: themeDataProvider.themeData.themeData.primaryColor,
+                    width: 1.0
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: themeDataProvider.themeData.themeData.scaffoldBackgroundColor,
+                    width: 1.0
+                ),
               ),
             ),
           ),

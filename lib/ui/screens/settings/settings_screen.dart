@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gym_trackr/domain/model/exercise.dart';
+import 'package:gym_trackr/ui/common/providers/delete_mode_provider.dart';
 import 'package:gym_trackr/ui/common/providers/exercise_data_source_provider.dart';
 import 'package:gym_trackr/ui/common/providers/theme_data_provider.dart';
 import 'package:gym_trackr/ui/screens/settings/components/add_exercise_button.dart';
@@ -7,17 +8,9 @@ import 'package:provider/provider.dart';
 
 import 'components/settings_exercise_tile.dart';
 
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends StatelessWidget {
 
   const SettingsScreen({Key? key}) : super(key: key);
-
-  @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
-}
-
-class _SettingsScreenState extends State<SettingsScreen> {
-
-  bool _trackMode = true;
 
   Widget _buildExerciseList(AsyncSnapshot<List<Exercise>> exerciseListSnapshot) {
     if (exerciseListSnapshot.hasData) {
@@ -28,7 +21,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         itemBuilder: (BuildContext context, int idx) {
           return SettingsExerciseTile(
             exercise: exercises[idx],
-            deleteMode: !_trackMode,
+            deleteMode: context.watch<DeleteModeProvider>().isDeleteMode,
           );
         },
       );
@@ -41,12 +34,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     final dataSourceProvider = context.watch<ExerciseDataSourceProvider>();
     final themeDataProvider = context.watch<ThemeDataProvider>();
+    final deleteModeProvider = context.watch<DeleteModeProvider>();
 
     _buildModeButton(AsyncSnapshot<List<Exercise>> exerciseListSnap) {
       if(exerciseListSnap.hasData && exerciseListSnap.data!.isNotEmpty) {
         return ElevatedButton(
           child: Text(
-            !_trackMode ? "Is tracked" : "Delete",
+            deleteModeProvider.isDeleteMode ? "Is tracked" : "Delete",
             style: TextStyle(
               fontSize: 18.0,
               fontWeight: FontWeight.w400,
@@ -59,9 +53,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             primary: themeDataProvider.themeData.tileColor,
           ),
           onPressed: () {
-            setState(() {
-              _trackMode = !_trackMode;
-            });
+            deleteModeProvider.setIsDeleteMode(!deleteModeProvider.isDeleteMode);
           },
         );
       } else {
@@ -101,29 +93,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
             SizedBox(
-              height: 100,
-              width: double.infinity,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Exercises",
-                      style: TextStyle(
-                        fontSize: 47,
-                        fontWeight: FontWeight.w800,
-                        color: themeDataProvider.themeData.tileColor,
+                height: 100,
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Exercises",
+                        style: TextStyle(
+                          fontSize: 47,
+                          fontWeight: FontWeight.w800,
+                          color: themeDataProvider.themeData.tileColor,
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: _buildModeButton(exerciserListSnap),
-                    ),
-                  ],
-                ),
-              )
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: _buildModeButton(exerciserListSnap),
+                      ),
+                    ],
+                  ),
+                )
             ),
             Expanded(
               child: Stack(
