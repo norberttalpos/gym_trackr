@@ -16,22 +16,22 @@ class AddRecordButton extends StatelessWidget {
     required this.exercise,
   }) : super(key: key);
 
-  List<TextFormField> _buildTextFormFields(CustomThemeData themeData) {
-
-    final textFormFields = [
-      DialogBase.createTextFormField("Reps", themeData)
-    ];
-
-    if(exercise.isWeightedExercise()) {
-      textFormFields.add(DialogBase.createTextFormField("Weight", themeData));
-    }
-
-    return textFormFields;
-  }
-
   @override
   Widget build(BuildContext context) {
     final themeDataProvider = context.watch<ThemeDataProvider>();
+
+    List<TextFormField> _buildTextFormFields(CustomThemeData themeData) {
+
+      final textFormFields = [
+        DialogBase.createTextFormField("Reps", themeData)
+      ];
+
+      if(exercise.isWeightedExercise()) {
+        textFormFields.add(DialogBase.createTextFormField("Weight", themeData));
+      }
+
+      return textFormFields;
+    }
 
     return Padding(
       padding: const EdgeInsets.all(8.0),

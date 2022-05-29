@@ -3,6 +3,7 @@ import 'package:gym_trackr/domain/model/exercise.dart';
 import 'package:gym_trackr/domain/model/record.dart';
 import 'package:gym_trackr/ui/common/providers/details_page_shown_provider.dart';
 import 'package:gym_trackr/ui/common/providers/exercise_data_source_provider.dart';
+import 'package:gym_trackr/ui/common/providers/exercise_deleted_provider.dart';
 import 'package:gym_trackr/ui/common/providers/theme_data_provider.dart';
 import 'package:gym_trackr/ui/screens/details/components/exercise_profile.dart';
 import 'package:provider/src/provider.dart';
@@ -67,6 +68,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
     }
   }
 
+  _navigateBackToHomeScreen() {
+    context.read<ExerciseDeletedProvider>().setIsExerciseDeleted(false);
+    Provider.of<DetailsPageShownProvider>(context, listen: false).setDetailsPageShown(false, "");
+  }
+
   Widget _buildExerciseProfile(AsyncSnapshot exerciseSnap) {
     if (exerciseSnap.hasData) {
       return ExerciseProfile(
@@ -93,6 +99,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
     return FutureBuilder<Exercise?>(
         future: dataSourceProvider.getExerciseByName(widget.exerciseName),
         builder: (context, exerciseSnap) {
+
           return Column(children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 15, left: 10),
@@ -100,7 +107,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      Provider.of<DetailsPageShownProvider>(context, listen: false).setDetailsPageShown(false, "");
+                      _navigateBackToHomeScreen();
                     },
                     child: Icon(
                       Icons.arrow_back,

@@ -27,9 +27,13 @@ class AddRecordDialog extends DialogBase {
 
     Exercise? exercise = await exerciseDataSourceProvider.getExerciseByName(exerciseName);
 
-    var record = exercise!.isBodyWeightExercise() ?
-      Record(reps: int.parse(values[0])) : Record(reps: int.parse(values[0]), weight: double.parse(values[1]));
+    try {
+      var record = exercise!.isBodyWeightExercise() ?
+        Record(reps: int.parse(values[0])) : Record(reps: int.parse(values[0]), weight: double.parse(values[1]));
 
-    exerciseDataSourceProvider.addRecordToExercise(exerciseName, record);
+      exerciseDataSourceProvider.addRecordToExercise(exerciseName, record);
+    } catch(e) {
+      // nop
+    }
   }
 }

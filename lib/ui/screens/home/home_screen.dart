@@ -7,6 +7,8 @@ import 'package:gym_trackr/ui/screens/details/details_screen.dart';
 import 'package:gym_trackr/ui/screens/home/components/home_exercise_tile.dart';
 import 'package:provider/provider.dart';
 
+import '../../common/providers/exercise_deleted_provider.dart';
+
 class HomeScreen extends StatefulWidget {
 
   const HomeScreen({Key? key}) : super(key: key);
@@ -19,12 +21,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
   bool detailsPageShown = false;
 
-  Widget _buildScreen() {
+  @override
+  Widget build(BuildContext context) {
     final detailsPageShownProvider = context.watch<DetailsPageShownProvider>();
     final dataSourceProvider = context.watch<ExerciseDataSourceProvider>();
     final themeDataProvider = context.watch<ThemeDataProvider>();
 
-    if(!detailsPageShownProvider.detailsPageShown) {
+    if(!detailsPageShownProvider.detailsPageShown || context.read<ExerciseDeletedProvider>().exerciseDeleted) {
+      if(context.read<ExerciseDeletedProvider>().exerciseDeleted) {
+        context.read<ExerciseDeletedProvider>().setIsExerciseDeleted(false);
+        context.read<DetailsPageShownProvider>().setDetailsPageShown(false, "");
+      }
+
       return Column(children: [
         Expanded(
           child: FutureBuilder<List<Exercise>>(
@@ -65,10 +73,5 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       return DetailsScreen(exerciseName: detailsPageShownProvider.selectedExercise);
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return _buildScreen();
   }
 }

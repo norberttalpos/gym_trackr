@@ -42,6 +42,33 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final dataSourceProvider = context.watch<ExerciseDataSourceProvider>();
     final themeDataProvider = context.watch<ThemeDataProvider>();
 
+    _buildModeButton(AsyncSnapshot<List<Exercise>> exerciseListSnap) {
+      if(exerciseListSnap.hasData && exerciseListSnap.data!.isNotEmpty) {
+        return ElevatedButton(
+          child: Text(
+            !_trackMode ? "Is tracked" : "Delete",
+            style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.w400,
+              color: themeDataProvider.themeData.mainTextColor,
+            ),
+          ),
+          style: ElevatedButton.styleFrom(
+            splashFactory: NoSplash.splashFactory,
+            padding: const EdgeInsets.all(13),
+            primary: themeDataProvider.themeData.tileColor,
+          ),
+          onPressed: () {
+            setState(() {
+              _trackMode = !_trackMode;
+            });
+          },
+        );
+      } else {
+        return Container();
+      }
+    }
+
     return FutureBuilder<List<Exercise>>(
         future: dataSourceProvider.getExercises(),
         builder: (context, exerciserListSnap) {
@@ -92,26 +119,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 8),
-                      child: ElevatedButton(
-                        child: Text(
-                          !_trackMode ? "Is tracked" : "Delete",
-                          style: TextStyle(
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.w400,
-                            color: themeDataProvider.themeData.mainTextColor,
-                          ),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          splashFactory: NoSplash.splashFactory,
-                          padding: const EdgeInsets.all(13),
-                          primary: themeDataProvider.themeData.tileColor,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _trackMode = !_trackMode;
-                          });
-                        },
-                      ),
+                      child: _buildModeButton(exerciserListSnap),
                     ),
                   ],
                 ),

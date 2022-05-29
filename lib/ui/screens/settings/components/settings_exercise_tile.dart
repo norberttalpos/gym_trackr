@@ -4,7 +4,10 @@ import 'package:gym_trackr/domain/model/exercise.dart';
 import 'package:gym_trackr/ui/common/exercise_tile_base.dart';
 import 'package:gym_trackr/ui/common/providers/exercise_data_source_provider.dart';
 import 'package:gym_trackr/ui/common/providers/theme_data_provider.dart';
+import 'package:gym_trackr/ui/screens/settings/dialog/add_exercise_dialog.dart';
 import 'package:provider/src/provider.dart';
+
+import '../dialog/exercise_deletion_confirmation_dialog.dart';
 
 class SettingsExerciseTile extends StatefulWidget {
   final Exercise exercise;
@@ -60,7 +63,18 @@ class _SettingsExerciseTileState extends State<SettingsExerciseTile> {
           padding: const EdgeInsets.only(left: 20),
           child: ElevatedButton(
             onPressed: () {
-              dataSourceProvider.deleteExercise(widget.exercise.name);
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return ExerciseDeletionConfirmationDialog(
+                      title: "Are you sure you want to delete ${widget.exercise.name}?",
+                      buttonText: "Delete",
+                      onButtonPressed: () {
+                        dataSourceProvider.deleteExercise(widget.exercise.name);
+                      },
+                    );
+                  }
+              );
             },
             child: Icon(
               Icons.delete,

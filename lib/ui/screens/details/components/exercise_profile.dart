@@ -16,50 +16,50 @@ class ExerciseProfile extends StatelessWidget {
     return exercise.isBodyWeightExercise() ? "Max" : "One-rep max";
   }
 
-  _buildScoreCard(BuildContext context) {
-    final themeDataProvider = context.watch<ThemeDataProvider>();
-
-    if(exercise.records.isNotEmpty) {
-      return Card(
-          elevation: 4.0,
-          color: themeDataProvider.themeData.tileColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(
-              children: [
-                Text(
-                  _scoreLabel(),
-                  style: TextStyle(
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.w400,
-                    color: themeDataProvider.themeData.mainTextColor,
-                  ),
-                ),
-                Text(
-                  exercise.getDisplayedScore(),
-                  style: TextStyle(
-                    fontSize: 22.0,
-                    fontWeight: FontWeight.w600,
-                    color: themeDataProvider.themeData.themeData.primaryColor,
-                  ),
-                ),
-              ],
-            ),
-          )
-      );
-    } else {
-      return Container();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final themeDataProvider = context.watch<ThemeDataProvider>();
 
     const imageSize = 130.0;
+
+    _buildScoreCard(BuildContext context) {
+      final themeDataProvider = context.watch<ThemeDataProvider>();
+
+      if(exercise.records.isNotEmpty) {
+        return Card(
+            elevation: 4.0,
+            color: themeDataProvider.themeData.tileColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                children: [
+                  Text(
+                    _scoreLabel(),
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.w400,
+                      color: themeDataProvider.themeData.mainTextColor,
+                    ),
+                  ),
+                  Text(
+                    exercise.getDisplayedScore(),
+                    style: TextStyle(
+                      fontSize: 22.0,
+                      fontWeight: FontWeight.w600,
+                      color: themeDataProvider.themeData.themeData.primaryColor,
+                    ),
+                  ),
+                ],
+              ),
+            )
+        );
+      } else {
+        return Container();
+      }
+    }
 
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -111,6 +111,8 @@ class ExerciseProfile extends StatelessWidget {
                             children: [
                               Text(
                                 exercise.name,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   fontSize: 30.0,
                                   fontWeight: FontWeight.w500,

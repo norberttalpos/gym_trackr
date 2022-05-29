@@ -59,9 +59,9 @@ class _AddExerciseDialogState extends State<AddExerciseDialog> {
               _exerciseType = newValue!;
             });
           },
-          style: TextStyle(
+          style: const TextStyle(
               fontSize: 18,
-              color: themeDataProvider.themeData.mainTextColor
+              color: Colors.black,
           ),
           decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
@@ -82,6 +82,14 @@ class _AddExerciseDialogState extends State<AddExerciseDialog> {
     }
 
     return AlertDialog(
+      title: Text(
+        "Add exercise",
+        style: TextStyle(
+          color: themeDataProvider.themeData.mainTextColor,
+          fontSize: 22,
+          fontWeight: FontWeight.w500,
+        ),
+        ),
       backgroundColor: themeDataProvider.themeData.tileColor,
       content: Stack(
         clipBehavior: Clip.none,
@@ -89,8 +97,10 @@ class _AddExerciseDialogState extends State<AddExerciseDialog> {
           Form(
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ..._buildForm(),
+                const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
