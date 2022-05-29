@@ -14,4 +14,6 @@ abstract class ExerciseDataSource {
   Future<void> createExercise(String exerciseName, String type);
 
   Future<void> toggleTracked(String exerciseName, bool isTracked);
+
+  Future<void> deleteExercise(String exerciseName);
 }

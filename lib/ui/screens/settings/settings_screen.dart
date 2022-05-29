@@ -16,6 +16,9 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+
+  bool _trackMode = true;
+
   Widget _buildExerciseList(AsyncSnapshot<List<Exercise>> exerciseListSnapshot) {
     if (exerciseListSnapshot.hasData) {
       List<Exercise> exercises = exerciseListSnapshot.data!.toList();
@@ -24,8 +27,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         itemCount: exercises.length,
         itemBuilder: (BuildContext context, int idx) {
           return SettingsExerciseTile(
-            key: Key(exercises[idx].name),
             exercise: exercises[idx],
+            deleteMode: !_trackMode,
           );
         },
       );
@@ -59,6 +62,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
+                      splashFactory: NoSplash.splashFactory,
                       padding: const EdgeInsets.all(15),
                       primary: themeDataProvider.oppositeThemeData.tileColor,
                     ),
@@ -72,13 +76,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
             SizedBox(
               height: 100,
               width: double.infinity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 22, left: 20),
-                    child: Text(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
                       "Exercises",
                       style: TextStyle(
                         fontSize: 47,
@@ -86,14 +90,40 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         color: themeDataProvider.themeData.tileColor,
                       ),
                     ),
-                  ),
-                ],
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: ElevatedButton(
+                        child: Text(
+                          !_trackMode ? "Is tracked" : "Delete",
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w400,
+                            color: themeDataProvider.themeData.mainTextColor,
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          splashFactory: NoSplash.splashFactory,
+                          padding: const EdgeInsets.all(13),
+                          primary: themeDataProvider.themeData.tileColor,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _trackMode = !_trackMode;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               )
             ),
             Expanded(
               child: Stack(
                 children: [
-                  _buildExerciseList(exerciserListSnap),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: _buildExerciseList(exerciserListSnap),
+                  ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,7 +133,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: const [
                           Padding(
-                            padding: EdgeInsets.only(right: 12, bottom: 3),
+                            padding: EdgeInsets.only(right: 5),
                             child: AddExerciseButton(),
                           ),
                         ],

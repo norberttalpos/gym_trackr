@@ -75,4 +75,10 @@ class MockExerciseDataSource implements ExerciseDataSource {
     int idx = _exerciseList.indexWhere((el) => el.name == exerciseName);
     _exerciseList[idx].tracked = isTracked;
   }
+
+  @override
+  Future<void> deleteExercise(String exerciseName) async {
+    int idx = _exerciseList.indexWhere((el) => el.name == exerciseName);
+    _exerciseList.removeAt(idx);
+  }
 }

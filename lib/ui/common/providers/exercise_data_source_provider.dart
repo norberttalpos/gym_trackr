@@ -31,4 +31,9 @@ class ExerciseDataSourceProvider with ChangeNotifier {
     await _exerciseDataSource.createExercise(exerciseName, type);
     notifyListeners();
   }
+
+  Future<void> deleteExercise(String exerciseName) async {
+    await _exerciseDataSource.deleteExercise(exerciseName);
+    notifyListeners();
+  }
 }

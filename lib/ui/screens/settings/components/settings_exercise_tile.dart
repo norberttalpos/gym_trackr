@@ -8,10 +8,12 @@ import 'package:provider/src/provider.dart';
 
 class SettingsExerciseTile extends StatefulWidget {
   final Exercise exercise;
+  final bool deleteMode;
 
   const SettingsExerciseTile({
     Key? key,
     required this.exercise,
+    required this.deleteMode,
   }) : super(key: key);
 
   @override
@@ -40,6 +42,40 @@ class _SettingsExerciseTileState extends State<SettingsExerciseTile> {
   @override
   Widget build(BuildContext context) {
     final themeDataProvider = context.watch<ThemeDataProvider>();
+    final dataSourceProvider = context.watch<ExerciseDataSourceProvider>();
+
+    _buildInteractionWidget() {
+      if(!widget.deleteMode) {
+        return Switch(
+          value: _isTracked,
+          onChanged: (val) {
+            _setIsTracked(val);
+          },
+          inactiveThumbColor: themeDataProvider.themeData.themeData.scaffoldBackgroundColor,
+          activeColor: themeDataProvider.themeData.themeData.primaryColor,
+          activeTrackColor: themeDataProvider.themeData.themeData.primaryColor,
+        );
+      } else {
+        return Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: ElevatedButton(
+            onPressed: () {
+              dataSourceProvider.deleteExercise(widget.exercise.name);
+            },
+            child: Icon(
+              Icons.delete,
+              color: themeDataProvider.themeData.mainTextColor,
+              size: 25,
+            ),
+            style: ElevatedButton.styleFrom(
+              shape: const CircleBorder(),
+              padding: const EdgeInsets.all(8),
+              primary: Colors.red.shade700,
+            ),
+          ),
+        );
+      }
+    }
 
     return ExerciseTileBase(
       onTap: () {
@@ -67,7 +103,7 @@ class _SettingsExerciseTileState extends State<SettingsExerciseTile> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width: 160,
+                      width: 130,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,14 +121,7 @@ class _SettingsExerciseTileState extends State<SettingsExerciseTile> {
                         ]
                       )
                     ),
-                    Switch(
-                      value: _isTracked,
-                      onChanged: (val) {
-                        _setIsTracked(val);
-                      },
-                      activeColor: themeDataProvider.themeData.themeData.primaryColor,
-                      activeTrackColor: themeDataProvider.themeData.themeData.primaryColor,
-                    )
+                    _buildInteractionWidget(),
                   ],
                 )
             ),

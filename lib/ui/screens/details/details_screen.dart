@@ -133,7 +133,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(right: 12, bottom: 3),
+                            padding: const EdgeInsets.only(right: 5),
                             child: _buildAddRecordButton(exerciseSnap),
                           ),
                         ],

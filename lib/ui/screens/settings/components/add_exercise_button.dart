@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gym_trackr/ui/common/providers/theme_data_provider.dart';
-import 'package:gym_trackr/ui/screens/details/dialog/add_record_dialog.dart';
 import 'package:gym_trackr/ui/screens/settings/dialog/add_exercise_dialog.dart';
 import 'package:provider/src/provider.dart';
 
