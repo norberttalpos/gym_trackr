@@ -1,15 +1,34 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gym_trackr/ui/common/theme_data.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeDataProvider with ChangeNotifier {
+
+  late bool _isLightTheme;
+
+  static String _isLightThemeKey = "isLightTheme";
+
+  ThemeDataProvider() {
+    init();
+  }
+
+  void init() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedPref = prefs.getBool(_isLightThemeKey);
+
+    if(savedPref == null) {
+      prefs.setBool(_isLightThemeKey, true);
+      _isLightTheme = true;
+    } else {
+      _isLightTheme = prefs.getBool(_isLightThemeKey)!;
+    }
+  }
 
   void toggleDarkMode() {
     _switchMode();
     notifyListeners();
   }
-
-  bool _isLightTheme = false;
 
   bool get isLightTheme => _isLightTheme;
 
@@ -45,7 +64,12 @@ class ThemeDataProvider with ChangeNotifier {
       )
   );
 
-  void _switchMode() => _isLightTheme = !_isLightTheme;
+  void _switchMode() async {
+    _isLightTheme = !_isLightTheme;
+
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool(_isLightThemeKey, _isLightTheme);
+  }
 
   CustomThemeData get themeData => _isLightTheme ? _lightTheme : _darkTheme;
 

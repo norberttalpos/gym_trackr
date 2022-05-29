@@ -14,19 +14,24 @@ import 'package:gym_trackr/ui/screens/home/home_screen.dart';
 import 'package:gym_trackr/ui/screens/settings/settings_screen.dart';
 import 'package:provider/provider.dart';
 
-void main() => runApp(
-  MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => ThemeDataProvider()),
-        ChangeNotifierProvider(create: (context) => CurrentTabProvider()),
-        ChangeNotifierProvider(create: (context) => DetailsPageShownProvider()),
-        ChangeNotifierProvider(create: (context) => ExerciseDataSourceProvider()),
-        ChangeNotifierProvider(create: (context) => ExerciseDeletedProvider()),
-        ChangeNotifierProvider(create: (context) => DeleteModeProvider()),
-      ],
-      child: const GymTrackr()
-  )
-);
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  runApp(
+      MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (context) => ThemeDataProvider()),
+            ChangeNotifierProvider(create: (context) => CurrentTabProvider()),
+            ChangeNotifierProvider(create: (context) => DetailsPageShownProvider()),
+            ChangeNotifierProvider(create: (context) => ExerciseDataSourceProvider()),
+            ChangeNotifierProvider(create: (context) => ExerciseDeletedProvider()),
+            ChangeNotifierProvider(create: (context) => DeleteModeProvider()),
+          ],
+          child: const GymTrackr()
+      )
+  );
+}
 
 class GymTrackr extends StatefulWidget {
   const GymTrackr({Key? key}) : super(key: key);
@@ -59,71 +64,52 @@ class _GymTrackrState extends State<GymTrackr> {
     final themeDataProvider = context.watch<ThemeDataProvider>();
     final currentTabProvider = context.watch<CurrentTabProvider>();
 
-    return FutureBuilder<FirebaseApp>(
-        future: Firebase.initializeApp(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            final firebase = snapshot.data;
-
-            if(firebase != null) {
-              return FutureBuilder(
-                  future: _checkUserId(),
-                  builder: (context, val) {
-                    if(val.connectionState == ConnectionState.done) {
-                      return MaterialApp(
-                          title: 'gym trackr',
-                          debugShowCheckedModeBanner: false,
-                          theme: themeDataProvider.themeData.themeData,
-                          home: Scaffold(
-                            body: SafeArea(
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 15.0),
-                                child: _buildPage(currentTabProvider.currentTab),
-                              ),
-                            ),
-                            bottomNavigationBar: BottomNavigationBar(
-                              selectedItemColor: themeDataProvider.themeData.themeData
-                                  .primaryColor,
-                              backgroundColor: themeDataProvider.themeData.themeData
-                                  .scaffoldBackgroundColor,
-                              currentIndex: currentTabProvider.currentTab,
-                              onTap: (int value) {
-                                Provider.of<CurrentTabProvider>(context, listen: false)
-                                    .setCurrentTab(value);
-
-                                // Provider.of<ThemeDataProvider>(context, listen: false).toggleDarkMode();
-                              },
-                              items: [
-                                BottomNavigationBarItem(
-                                  icon: const Icon(
-                                    Icons.home,
-                                    size: 30.0,
-                                  ),
-                                  label: "Home",
-                                  backgroundColor: themeDataProvider.themeData.themeData
-                                      .primaryColor,
-                                ),
-                                BottomNavigationBarItem(
-                                  icon: const Icon(
-                                    Icons.settings,
-                                    size: 30.0,
-                                  ),
-                                  label: "Settings",
-                                  backgroundColor: themeDataProvider.themeData.themeData
-                                      .primaryColor,
-                                )
-                              ],
-                            ),
-                          ));
-                    } else {
-                      return Container();
-                    }
-                  }
-              );
-            } else {
-              return Container();
-            }
-
+    return FutureBuilder(
+        future: _checkUserId(),
+        builder: (context, val) {
+          if(val.connectionState == ConnectionState.done) {
+            return MaterialApp(
+                title: 'gym trackr',
+                debugShowCheckedModeBanner: false,
+                theme: themeDataProvider.themeData.themeData,
+                home: Scaffold(
+                  body: SafeArea(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 15.0),
+                      child: _buildPage(currentTabProvider.currentTab),
+                    ),
+                  ),
+                  bottomNavigationBar: BottomNavigationBar(
+                    selectedItemColor: themeDataProvider.themeData.themeData
+                        .primaryColor,
+                    backgroundColor: themeDataProvider.themeData.themeData
+                        .scaffoldBackgroundColor,
+                    currentIndex: currentTabProvider.currentTab,
+                    onTap: (int value) {
+                      context.watch<CurrentTabProvider>().setCurrentTab(value);
+                    },
+                    items: [
+                      BottomNavigationBarItem(
+                        icon: const Icon(
+                          Icons.home,
+                          size: 30.0,
+                        ),
+                        label: "Home",
+                        backgroundColor: themeDataProvider.themeData.themeData
+                            .primaryColor,
+                      ),
+                      BottomNavigationBarItem(
+                        icon: const Icon(
+                          Icons.settings,
+                          size: 30.0,
+                        ),
+                        label: "Settings",
+                        backgroundColor: themeDataProvider.themeData.themeData
+                            .primaryColor,
+                      )
+                    ],
+                  ),
+                ));
           } else {
             return Container();
           }
